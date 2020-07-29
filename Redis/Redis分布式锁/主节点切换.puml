@@ -1,0 +1,21 @@
+@startuml 主节点切换
+
+participant 客户端A  as A
+participant redis as r
+participant 客户端B as B
+
+A->r: A获取锁
+activate A #LimeGreen
+activate r #LimeGreen
+
+r->r: 主节点宕机，\n某从节点被选为新的主节点\n由于异步传输，丢失最新数据
+deactivate r
+
+B->r: B 获取锁
+activate B #red
+activate r #Yellow
+
+
+note right of r:  AB 同时持有锁！
+
+@enduml

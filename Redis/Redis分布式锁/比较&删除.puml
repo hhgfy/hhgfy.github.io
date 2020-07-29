@@ -1,0 +1,40 @@
+@startuml 比较&删除
+
+participant 客户端A  as A
+
+participant redis as r
+
+participant 客户端B as B
+
+participant 客户端C as C
+
+
+A->r: 1. A获取锁\n value=randA
+
+activate A #LimeGreen
+activate r #LimeGreen
+|||
+A->A: 2. 执行任务，但被卡住了
+
+r->r: 3. 超时释放锁
+deactivate r
+' |||
+
+B->r: 4. B获取锁\n value=randB
+activate B #DodgerBlue
+activate r #DodgerBlue
+B->B: 执行任务
+
+A->r:  _5. 终于执行完了，释放锁\n   randA != randB，没删掉
+deactivate A
+
+C->r: 6. C获取锁
+
+note right of C: 锁正被B持有\n 获取失败
+
+B->r: 正常释放
+deactivate r
+deactivate B
+
+@enduml
+

@@ -1,0 +1,39 @@
+@startuml lua
+
+participant 客户端A  as A
+participant redis as r
+participant 客户端B as B
+participant 客户端C as C
+
+A->r: A获取锁\n value=randA
+activate A #LimeGreen
+activate r #LimeGreen
+
+A->A: 执行任务
+A->r: 释放锁步骤1：  get key
+A<-r: randA
+
+r->r: 超时过期
+deactivate r
+
+B->r: B获取锁\n value=randB
+activate B #DodgerBlue
+activate r #DodgerBlue
+
+A->A: 比较是否是自己的随机串，通过
+A->r: 释放锁步骤2： del key
+
+deactivate A
+deactivate r
+
+C->r: C获取锁\n value=randC   
+
+
+activate C #Red
+activate r #BlueViolet
+
+note left of r:  BC同时持有锁！
+
+
+
+@enduml

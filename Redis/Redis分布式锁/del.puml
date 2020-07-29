@@ -1,0 +1,46 @@
+@startuml 直接del
+
+participant 客户端A  as A
+
+participant redis as r
+
+participant 客户端B as B
+
+participant 客户端C as C
+
+
+A->r: 1. A获取锁
+
+activate A #LimeGreen
+activate r #LimeGreen
+|||
+A->A: 2. 执行任务，但被卡住了
+
+r->r: 3. 超时释放锁
+deactivate r
+' |||
+
+B->r: 4. B获取锁
+activate B #DodgerBlue
+activate r #DodgerBlue
+B->B: 执行任务
+
+A->r:  _5. 终于执行完了，释放锁\n \tdel   key
+deactivate r
+deactivate A
+
+C->r: 6. C获取锁
+
+activate C #Red
+activate r #BlueViolet
+note left of r:  BC同时持有锁!
+
+C->C: 执行任务
+
+@enduml
+
+1. 客户端A获取锁，执行任务 （Redis客户端，实际是一个服务器节点）
+2. 执行中被阻塞了，redis里的键超时释放了，但A仍在继续执行
+3. 客户端B获取锁，开始执行它自己的任务
+4. A缓过来了，把任务执行完，一句`del key` 将B当前正在持有的锁释放了 （但B此时不知情，还以为自己持有锁，继续执行自己的任务）
+5. 另有客户端C获取锁，这时客户端B和C同时持有，不满足互斥性了
