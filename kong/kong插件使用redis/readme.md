@@ -5,6 +5,7 @@ kong里面已经包含了[lua-resty-redis](https://github.com/openresty/lua-rest
 
 ## 一些要注意的点
 
+
 ### 连接池
 由于kong的插件开启后，对于指定的Route/Service，每个请求都将执行一遍。如果每次都去重新连接redis，效率会很低。
 

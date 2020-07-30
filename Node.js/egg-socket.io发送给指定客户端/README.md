@@ -5,6 +5,7 @@ egg-socket.io是对socket.io的一个封装，加上了对router、controller、
 
 其中，router与controller主要用于分发和处理`socket.io`客户端的请求，但我们之所以引入`socket.io`，往往是为了获得服务端主动推送的能力，这两部分就略过了。
 
+
 剩下的`namespace`和`middleware`与实现向指定客户端推送功能有关，在`egg-socket.io`里它们都是通过配置文件进行配置的
 
 ```js

@@ -1,0 +1,15 @@
+@startuml 证书申请
+
+participant s as server
+participant ca as CA
+
+s->s: 生成公钥/私钥对
+
+s->ca: 申请（公钥，域名）
+
+ca->ca: 确认身份\n 对证书内容做hash \n 用CA的私钥加密hash值
+
+ca->s: 证书发给申请者(包括内容和被非对称加密的签名)
+
+@enduml
+

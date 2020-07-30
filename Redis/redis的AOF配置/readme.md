@@ -3,6 +3,7 @@
 
 
 ### 基本配置
+
 ```sh
 appendonly no # 是否开启aof
 appendfilename "appendonly.aof" # 文件名
