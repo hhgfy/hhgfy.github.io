@@ -2,10 +2,8 @@
 
 - Node.js
     - [工作线程](Node.js/工作线程/)
-    - [](Node.js/工作线程/)
     - [集群环境下防止定时任务重复](Node.js/集群环境下防止定时任务重复/)
     - [egg-socket.io发送给指定客户端](Node.js/egg-socket.io发送给指定客户端/)
-
 
 - Redis
     - [Redis分布式锁](Redis/Redis分布式锁/)
