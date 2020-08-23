@@ -1,0 +1,21 @@
+@startuml DH
+
+participant client as c
+participant server as s
+
+
+
+c->s: 开始协商
+s->s: 生成DH参数、DH密钥对
+s->s: 用RSA私钥对上一步内容签名
+c<-s: 发送 签名值、DH参数、DH公钥
+c->c: RSA公钥校验签名，获取可信的DH参数、DH公钥
+c->c: 根据DH参数生成客户端DH密钥对
+c->s: 发送 客户端DH公钥
+
+note right of s: client、server 都有\n DH参数，对方DH公钥，自己DH私钥
+
+c->c: 生成预备主密钥 pre-master
+s->s: 生成预备主密钥 pre-master
+
+@enduml

@@ -85,6 +85,7 @@ async function asyncFib (n) {
 ```
 
 - 工作线程运行的代码
+
 ```js
 // fib.js
 const { workerData, parentPort } = require('worker_threads');

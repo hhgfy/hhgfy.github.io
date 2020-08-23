@@ -15,21 +15,23 @@
       name: '',
       repo: '',
       loadSidebar: true,
-      subMaxLevel: 2, //
+      subMaxLevel: 3, //侧边栏能显示的目录层级 ###
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md'
       },
-      count:{
+      count:{ // 字数统计配置
         countable:true,
         fontsize:'0.9em',
         color:'rgb(90,90,90)',
         language:'chinese'
-      }
+      },
+      search: 'auto', // 搜索配置
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
   
   <script src="//unpkg.com/docsify-count/dist/countable.js"></script> <!-- 字数统计 -->
-
+  <!-- 全文搜索 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
 </body>
 </html>

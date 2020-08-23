@@ -6,13 +6,13 @@ participant server as s
 participant  CA as ca
 
 group 申请证书
-s->s: 生成公钥/私钥对
+s->s: 生成RSA 公钥/私钥对
 
 s->ca: 申请（公钥，域名）
 
 ca->ca: 确认身份\n 对证书内容做hash \n 用CA的私钥加密hash值
 
-ca->s: 证书发给申请者(包括内容和被非对称加密的签名)
+ca->s: 证书发给申请者(包括内容和被CA私钥加密的签名)
 
 end
 
@@ -20,23 +20,19 @@ end
 
 group 一次HTTPS请求
 
-c->s: 随机数1 + 客户端可用密码套件的列表
-s->c: 随机数2 + 选定密码套件 + 证书（含签名）  
+c->s: client hello: \n 随机数1 + 客户端可用的密码套件列表
+s->c: server hello: \n 随机数2 + 选定的密码套件 
+s->c: certificate: \n 返回证书 
 
-note right of s: 这个密码套件是一整套\n 包括密钥协商、对称加密、摘要等用什么算法
+c->c: 根据CA验证证书
 
+c->s: 生成随机数 pre-master \n（并用证书里携带的服务器公钥加密发送）
+s->s: 私钥解密，获取 pre-master
 
-c->c: 验证证书
-
-c->s: 随机数3 （用证书里携带的服务器公钥加密发送）
-s->s: 私钥解密，获取随机数3
-
-note right of s: client、server 都有\n 随机数123 和 指定加密方法了
+note right of s: client、server 都有\n 随机数12、pre-master、指定加密方法
 
 c->c: 生成对称密钥
 s->s: 生成对称密钥
-
-s->c: 握手结束，接下来使用加密通信
 
 c->s: 对称密钥加密通信
 c<-s: 对称密钥加密通信
