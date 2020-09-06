@@ -13,6 +13,7 @@
     - [redis的AOF配置](Redis/redis的AOF配置/)
     - [进程内缓存与redis比较](Redis/进程内缓存与redis比较/)
     - [Redis中Lua脚本的使用和超时处理](Redis/Redis中Lua脚本的使用和超时处理/)
+    - [关于Redis主从节点数据过期一致性的思考，它真的足够一致了吗？](Redis/关于Redis主从节点数据过期一致性的思考，它真的足够一致了吗？/)
 
 
 - 网络
